@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Exhibition
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <ion-item *ngIf="b">
+    <ion-label floating>Number of Players</ion-label>
+    <ion-input type="number" [(ngModel)]="playerNumber"></ion-input>
+  </ion-item>
+  <button *ngIf="b" ion-button color="secondary" (click)="play()" block>Play</button>
+  <ion-label *ngIf='in'>Rounds Played: {{rounds}}</ion-label>
+  <ion-list *ngIf="in" >
+    <ion-row  *ngFor="let match of matches">
+      <ion-col>
+        <ion-label>Court #{{match.court}}</ion-label>
+      </ion-col>
+      <ion-col>
+          <button ion-button block [color]='match.buttonColor1' (click)="winnerWinnerDoubles(match.court,1,match.players[0],match.players[1],match.players[2],match.players[3])">{{match.players[0].id}} and {{match.players[1].id}}</button>
+      </ion-col>
+      <ion-col>
+          <ion-label>Versus</ion-label>
+          
+      </ion-col>
+      <ion-col>
+          <button ion-button block [color]='match.buttonColor2' (click)="winnerWinnerDoubles(match.court,2,match.players[2],match.players[3],match.players[0],match.players[1])">{{match.players[2].id}} and {{match.players[3].id}}</button>
+      </ion-col>
+    </ion-row>
+      
+  </ion-list> 
+
+  <ion-row  *ngIf="singles">
+      <ion-col>
+        <ion-label>Court #{{singleGame.courtNum}}</ion-label>
+      </ion-col>
+      <ion-col>
+          <button ion-button block [color]='sbuttonColor1' (click)="winnerWinnerSingles(1,singleGame.player1,singleGame.player2)">{{singleGame.player1.id}}</button>
+      </ion-col>
+      <ion-col>
+          <ion-label>Versus</ion-label>
+          
+      </ion-col>
+      <ion-col>
+          <button ion-button block [color]='sbuttonColor2' (click)="winnerWinnerSingles(2,singleGame.player2,singleGame.player1)">{{singleGame.player2.id}}</button>
+      </ion-col>
+  </ion-row>
+
+  <ion-item *ngIf="byeRound">
+    <ion-label>Bye: {{byePlayer.id}}</ion-label>
+  </ion-item>
+    
+  <button ion-button *ngIf="in" (click)="nextRound()" block>Next Round</button> 
+  <button ion-button *ngIf="in" (click)="addPlayer()" block>Add Player</button>
+  <button ion-button *ngIf="in" (click)="competeShuff()" block>Competitve Shuffle</button>
+
+</ion-content>
